@@ -1,0 +1,42 @@
+.container {
+    margin-bottom: 40px;
+}
+
+.select {
+    margin: 20px auto 0 auto;
+    max-width: 200px;
+}
+
+.clock {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 1px solid #000;
+}
+
+.clock__hours,
+.clock__minutes,
+.clock__seconds {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: #000;
+    transform-origin: 0 0;
+}
+
+.clock__hours {
+    width: 2px;
+    height: 40px;
+}
+
+.clock__minutes {
+    width: 2px;
+    height: 80px;
+}
+
+.clock__seconds {
+    width: 1px;
+    height: 90px;
+}

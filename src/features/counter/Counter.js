@@ -6,10 +6,10 @@ import {
   incrementByAmount,
   incrementAsync,
   selectCount,
-} from './counterSlice';
-import styles from './Counter.module.css';
+} from './clockSlice';
+import styles from './clock.module.css';
 
-export function Counter() {
+export function clock() {
   const count = useSelector(selectCount);
   const dispatch = useDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
