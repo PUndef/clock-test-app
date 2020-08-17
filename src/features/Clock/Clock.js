@@ -41,9 +41,10 @@ const getPointersDegree = (currentTime) => {
     // Offset value for correct position from top of circle
     const offsetDegree = 180;
     const fullCircleDegree = 360;
-    const hoursInCircle = 24;
+    const hoursInCircle = 12;
     const minutesInCircle = 60;
     const secondsInCircle = 60;
+    // TODO hours position should depend from current minutes position
     state.hours = ((fullCircleDegree / hoursInCircle) * currentTime.hours) - offsetDegree;
     state.minutes = (fullCircleDegree / minutesInCircle) * currentTime.minutes - offsetDegree;
     state.seconds = (fullCircleDegree / secondsInCircle) * currentTime.seconds - offsetDegree;
