@@ -30,20 +30,12 @@ const getPointersDegree = (currentTime) => {
         minutes: 0,
         seconds: 0,
     }
-    if (
-        !currentTime
-        || !currentTime.hours
-        || !currentTime.minutes
-        || !currentTime.seconds
-    ) return state;
-    // For setting correct degree
     const offsetDegree = 180;
     const fullCircleDegree = 360;
     const hoursInCircle = 24;
     const minutesInCircle = 60;
     const secondsInCircle = 60;
     state.hours = ((fullCircleDegree / hoursInCircle) * currentTime.hours) - offsetDegree;
-    console.log('(fullCircleDegree / hoursInCircle)', (fullCircleDegree / hoursInCircle));
     state.minutes = (fullCircleDegree / minutesInCircle) * currentTime.minutes - offsetDegree;
     state.seconds = (fullCircleDegree / secondsInCircle) * currentTime.seconds - offsetDegree;
     return state;
@@ -58,8 +50,6 @@ const Clock = ({
     const initTimezone = defaultOptions[0];
     const [timeZone, setTimezone] = useState(initTimezone);
     const datetime = useSelector(selectClock);
-    console.log('timeZone', timeZone);
-    console.log('datetime', datetime);
     const currentTime = moment(datetime).utcOffset(timeZone.value);
     const actualState = {
         hours: currentTime.hours(),
@@ -67,17 +57,13 @@ const Clock = ({
         seconds: currentTime.seconds(),
     }
     const degrees = getPointersDegree(actualState);
-    console.log('actualState', actualState);
-    console.log('degrees', degrees);
     const dispatch = useDispatch();
     useEffect(() => {
         const minUpdateInterval = 500;
         const updateIntervalTime = updateInterval > minUpdateInterval
             ? updateInterval
             : minUpdateInterval;
-        console.log('effect', updateIntervalTime);
         const interval = setInterval(() => {
-            console.log('effect interval');
             dispatch(update());
         }, updateIntervalTime);
         setClockInterval(interval)
@@ -91,22 +77,19 @@ const Clock = ({
             <div className={styles.clock}>
                 <div
                     className={styles.clock__hours}
-                    style={{
-                        transform: `rotate(${degrees.hours}deg)`,
-                    }}
+                    style={{ transform: `rotate(${degrees.hours}deg)` }}
                 />
                 <div
                     className={styles.clock__minutes}
-                    style={{
-                        transform: `rotate(${degrees.minutes}deg)`,
-                    }}
+                    style={{ transform: `rotate(${degrees.minutes}deg)` }}
                 />
                 <div
                     className={styles.clock__seconds}
-                    style={{
-                        transform: `rotate(${degrees.seconds}deg)`,
-                    }}
+                    style={{ transform: `rotate(${degrees.seconds}deg)` }}
                 />
+            </div>
+            <div className={styles.time}>
+                {moment(currentTime).format('HH:mm:ss')}
             </div>
             <div className={styles.select}>
                 <Select

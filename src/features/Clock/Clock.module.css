@@ -2,11 +2,6 @@
     margin-bottom: 40px;
 }
 
-.select {
-    margin: 20px auto 0 auto;
-    max-width: 200px;
-}
-
 .clock {
     position: relative;
     width: 200px;
@@ -39,4 +34,14 @@
 .clock__seconds {
     width: 1px;
     height: 90px;
+}
+
+.time {
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+.select {
+    margin: 20px auto 0 auto;
+    max-width: 200px;
 }

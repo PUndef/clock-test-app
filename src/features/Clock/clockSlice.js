@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import moment from 'moment';
-import dateFormat from '../../constants';
 
 export const clockSlice = createSlice({
   name: 'clock',
@@ -10,7 +9,6 @@ export const clockSlice = createSlice({
   reducers: {
     update: state => {
       state.datetime = moment().format();
-      console.log('update reducer', state.datetime);
     },
   },
 });
