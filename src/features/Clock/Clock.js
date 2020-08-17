@@ -24,12 +24,21 @@ const defaultOptions = [{
     label: 'Москва',
 }];
 
+/**
+ * Method for getting degree values
+ * based on provided time
+ *
+ * @param {object} currentTime -
+ * @returns {object} pointer position degree values
+ * for hour, minute, seconds
+ */
 const getPointersDegree = (currentTime) => {
     let state = {
         hours: 0,
         minutes: 0,
         seconds: 0,
     }
+    // Offset value for correct position from top of circle
     const offsetDegree = 180;
     const fullCircleDegree = 360;
     const hoursInCircle = 24;
@@ -49,15 +58,19 @@ const Clock = ({
     // Current timezone
     const initTimezone = defaultOptions[0];
     const [timeZone, setTimezone] = useState(initTimezone);
+    // Time from store
     const datetime = useSelector(selectClock);
+    // Time with correct timezone
     const currentTime = moment(datetime).utcOffset(timeZone.value);
     const actualState = {
         hours: currentTime.hours(),
         minutes: currentTime.minutes(),
         seconds: currentTime.seconds(),
     }
-    const degrees = getPointersDegree(actualState);
+    const degreeValues = getPointersDegree(actualState);
+
     const dispatch = useDispatch();
+
     useEffect(() => {
         const minUpdateInterval = 500;
         const updateIntervalTime = updateInterval > minUpdateInterval
@@ -77,15 +90,15 @@ const Clock = ({
             <div className={styles.clock}>
                 <div
                     className={styles.clock__hours}
-                    style={{ transform: `rotate(${degrees.hours}deg)` }}
+                    style={{ transform: `rotate(${degreeValues.hours}deg)` }}
                 />
                 <div
                     className={styles.clock__minutes}
-                    style={{ transform: `rotate(${degrees.minutes}deg)` }}
+                    style={{ transform: `rotate(${degreeValues.minutes}deg)` }}
                 />
                 <div
                     className={styles.clock__seconds}
-                    style={{ transform: `rotate(${degrees.seconds}deg)` }}
+                    style={{ transform: `rotate(${degreeValues.seconds}deg)` }}
                 />
             </div>
             <div className={styles.time}>
