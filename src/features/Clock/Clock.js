@@ -42,12 +42,17 @@ const getPointersDegree = (currentTime) => {
     const offsetDegree = 180;
     const fullCircleDegree = 360;
     const hoursInCircle = 12;
-    const minutesInCircle = 60;
-    const secondsInCircle = 60;
-    // TODO hours position should depend from current minutes position
-    state.hours = ((fullCircleDegree / hoursInCircle) * currentTime.hours) - offsetDegree;
-    state.minutes = (fullCircleDegree / minutesInCircle) * currentTime.minutes - offsetDegree;
-    state.seconds = (fullCircleDegree / secondsInCircle) * currentTime.seconds - offsetDegree;
+    const minSecInCircle = 60;
+    const degreeOnOneHour = fullCircleDegree / hoursInCircle;
+    const degreesFromMinSecOnCircle = (fullCircleDegree / minSecInCircle);
+    state.minutes = degreesFromMinSecOnCircle * currentTime.minutes - offsetDegree;
+    // The ratio of the angle value in minutes from the whole circle
+    const attitudeMinutesFromCircle = (degreesFromMinSecOnCircle * currentTime.minutes) / fullCircleDegree;
+    // How many degrees from the hour of the current number of minutes
+    const diffMinutesInHour = degreeOnOneHour * attitudeMinutesFromCircle;
+    state.seconds = degreesFromMinSecOnCircle * currentTime.seconds - offsetDegree;
+    // Let's calculate the angle value for the current hour and add a correction for the number of minutes
+    state.hours = ((fullCircleDegree / hoursInCircle) * currentTime.hours) - offsetDegree + diffMinutesInHour;
     return state;
 };
 
@@ -72,6 +77,7 @@ const Clock = ({
 
     const dispatch = useDispatch();
 
+    // Mount component
     useEffect(() => {
         const minUpdateInterval = 500;
         const updateIntervalTime = updateInterval > minUpdateInterval
@@ -82,6 +88,7 @@ const Clock = ({
         }, updateIntervalTime);
         setClockInterval(interval)
         return () => {
+            // Unmount component
             clearInterval(clockInterval);
         };
     }, []);
